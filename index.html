@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://kit.fontawesome.com/0e43686b71.js" crossorigin="anonymous"></script>
+
+    <title>BoolFix</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div id="logo">
+          <h1>BoolFix</h1>
+        </div>
+        <div id="searchar">
+          <input id="search" type="text">
+          <button id="lookingFor">Search</button>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div id="films">
+
+      </div>
+    </main>
+
+    <script id="entry-template" type="text/x-handlebars-template">
+      <div class="container">
+        <div>
+          <!-- {{{poster}}} -->
+        </div>
+        <ul>
+          <li>Title: {{title}}</li>
+          <li>Original Title: {{titleOriginal}}</li>
+          <li>Rate:
+            {{#each rate}}
+              <i class="far fa-star"></i>
+            {{/each}}
+          </li>
+          <li>Language: {{{lang}}}</li>
+        </ul>
+      </div>
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
+  </body>
+</html>
