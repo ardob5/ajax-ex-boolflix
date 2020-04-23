@@ -1,54 +1,107 @@
 $(document).ready(function(){
 
+  var source = $("#entry-template").html();
+  var template = Handlebars.compile(source);
+  var contentFilms = $('#films');
+
   $('#lookingFor').on('click', research);
 
   $('#search').keypress(function (e) {
       var key = e.which;
       if(key == 13){
-          research();
+        research();
       }
   });
+
 
   function research(){
 
     var search = $('#search').val();
     search = search.replace(" ","+");
 
-    $('#films').html('');
+    contentFilms.html('');
 
+    // Film Request
     $.ajax({
       url: "https://api.themoviedb.org/3/search/movie?",
       method: "GET",
       data: {
-          api_key: "886eef916355a6adc533e0b21005b3a1",
-          query: search,
+        api_key: "886eef916355a6adc533e0b21005b3a1",
+        query: search,
       },
       success: function (data) {
-        for (var i = 0; i < data.results.length; i++) {
-          var source = $("#entry-template").html();
-          var template = Handlebars.compile(source);
-          var context = {
-            poster: data.results[i].poster_path,
-            title: data.results[i].title,
-            titleOriginal: data.results[i].original_title ,
-            rate: converterBase5(data.results[i].vote_average),
-            lang: flags(data.results[i].original_language)
-          };
-          var html = template(context);
-          $('#films').append(html);
-        }
+        var requestList = data.results;
+        outputGenerator(requestList, "Film");
       },
       error: function(error, status){
       }
     });
-  }
 
-  function converterBase5(rate) {
-    var converted = (rate * 5) / 10;
-    return Array.from(Array(Math.round(converted)).keys());
+    // TV Request
+    $.ajax({
+      url: "https://api.themoviedb.org/3/search/tv",
+      method: "GET",
+      data: {
+        api_key: "886eef916355a6adc533e0b21005b3a1",
+        query: search,
+      },
+      success: function (data) {
+        var requestList = data.results;
+        var poster = 'https://image.tmdb.org/t/p/w300' + data.results.poster_path;
+        outputGenerator(requestList, "SerieTV");
+      },
+      error: function(error, status){
+      }
+    });
   };
 
+  // OutputGenerator Function
+  function outputGenerator(objectsList, type) {
+    for (var i = 0; i < objectsList.length; i++) {
+
+      var movie = objectsList[i];
+      var titleMovie, originalTitle;
+
+
+      if (type === "Film") {
+        titleMovie = movie.title;
+        originalTitle = movie.original_title;
+      } else if (type === "SerieTV"){
+        titleMovie = movie.name;
+        originalTitle = movie.original_title;
+      }
+
+      var context = {
+        title: titleMovie,
+        titleOriginal: originalTitle,
+        rate: converterBaseFive(movie.vote_average),
+        lang: flags(movie.original_language),
+        requestType: type,
+        // poster: poster
+      }
+
+      var html = template(context);
+      contentFilms.append(html);
+    }
+  };
+
+  // Converter Function
+  function converterBaseFive(rate) {
+    var convertedNum = (rate * 5) / 10;
+    var stars = "";
+    for (var i = 0; i < 5; i++) {
+      if (i <= convertedNum) {
+        stars += '<i class="fas fa-star"></i>';
+      } else {
+        stars += '<i class="far fa-star"></i>';
+      };
+    }
+    return stars;
+  };
+
+  // Flags Function
   function flags(lang) {
+
     if (lang == "en" ) {
       return "<img src='img/flag-england.png' alt=''>";
     } else if (lang == "it") {
@@ -57,4 +110,7 @@ $(document).ready(function(){
       return lang;
     }
   };
-})
+
+});
+
+// FINE

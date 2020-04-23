@@ -23,6 +23,9 @@
       <div id="films">
 
       </div>
+      <div id="tv">
+
+      </div>
     </main>
 
     <script id="entry-template" type="text/x-handlebars-template">
@@ -33,16 +36,13 @@
         <ul>
           <li>Title: {{title}}</li>
           <li>Original Title: {{titleOriginal}}</li>
-          <li>Rate:
-            {{#each rate}}
-              <i class="far fa-star"></i>
-            {{/each}}
-          </li>
+          <li>Rate: {{{rate}}}</li>
           <li>Language: {{{lang}}}</li>
+          <li>Type: {{requestType}}</li>
         </ul>
       </div>
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
   </body>
