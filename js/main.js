@@ -47,7 +47,6 @@ $(document).ready(function(){
       },
       success: function (data) {
         var requestList = data.results;
-        var poster = 'https://image.tmdb.org/t/p/w300' + data.results.poster_path;
         outputGenerator(requestList, "SerieTV");
       },
       error: function(error, status){
@@ -77,7 +76,7 @@ $(document).ready(function(){
         rate: converterBaseFive(movie.vote_average),
         lang: flags(movie.original_language),
         requestType: type,
-        // poster: poster
+        poster: posterGenerator(movie.poster_path)
       }
 
       var html = template(context);
@@ -111,6 +110,15 @@ $(document).ready(function(){
     }
   };
 
+  // Poster Function
+  function posterGenerator(urlImg) {
+    var myPoster;
+    if (urlImg) {
+      var newUrl = "https://image.tmdb.org/t/p/w154" + urlImg;
+      return myPoster = "<img src='" + newUrl + "' alt='immagine'>"
+    }
+    return myPoster;
+  }
 });
 
 // FINE
