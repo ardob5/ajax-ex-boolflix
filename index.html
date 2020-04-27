@@ -11,7 +11,7 @@
     <header>
       <nav>
         <div id="logo">
-          <h1>BoolFix</h1>
+          <h1>ArdoFix</h1>
         </div>
         <div id="searchar">
           <input id="search" type="text">
@@ -23,14 +23,13 @@
       <div id="films">
 
       </div>
-      <div id="tv">
-
-      </div>
     </main>
+
+
 
     <script id="entry-template" type="text/x-handlebars-template">
       <div class="container">
-        <div>
+        <div class="img-cards">
           {{{poster}}}
         </div>
         <ul>
@@ -39,6 +38,7 @@
           <li>Rate: {{{rate}}}</li>
           <li>Language: {{{lang}}}</li>
           <li>Type: {{requestType}}</li>
+          <li id="description">Description: {{{overview}}}</li>
         </ul>
       </div>
     </script>

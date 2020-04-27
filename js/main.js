@@ -13,6 +13,12 @@ $(document).ready(function(){
       }
   });
 
+  // ?????????
+  // $(".container").mouseenter(
+  // function() {
+  //   $(this).children(".img-cards").style().display("none");
+  // });
+  // ???????????
 
   function research(){
 
@@ -54,6 +60,9 @@ $(document).ready(function(){
     });
   };
 
+
+
+
   // OutputGenerator Function
   function outputGenerator(objectsList, type) {
     for (var i = 0; i < objectsList.length; i++) {
@@ -76,11 +85,13 @@ $(document).ready(function(){
         rate: converterBaseFive(movie.vote_average),
         lang: flags(movie.original_language),
         requestType: type,
-        poster: posterGenerator(movie.poster_path)
+        poster: posterGenerator(movie.poster_path),
+        overview: movie.overview
       }
 
       var html = template(context);
       contentFilms.append(html);
+
     }
   };
 
@@ -114,11 +125,13 @@ $(document).ready(function(){
   function posterGenerator(urlImg) {
     var myPoster;
     if (urlImg) {
-      var newUrl = "https://image.tmdb.org/t/p/w154" + urlImg;
+      var newUrl = "https://image.tmdb.org/t/p/w342" + urlImg;
       return myPoster = "<img src='" + newUrl + "' alt='immagine'>"
     }
     return myPoster;
   }
+
+
 });
 
 // FINE
